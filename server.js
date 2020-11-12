@@ -1,6 +1,7 @@
 const debug = require("debug")("app");
 const express = require("express");
 const morgan = require("morgan");
+const apicache = require("apicache");
 const highlight = require("./highlight.js");
 
 const app = express();
@@ -11,7 +12,14 @@ app.use(express.static("public"));
 
 app.use(express.json()); // parse request's json body
 
-app.post("/api/highlight", (req, res, next) => {
+const cache = apicache.options({
+  appendKey: (req, res) => {
+    const { mode, code } = req.body;
+    return mode + code;
+  },
+}).middleware;
+
+app.post("/api/highlight", cache("5 minutes"), (req, res, next) => {
   debug("BODY: %O", req.body);
   const { mode, code } = req.body;
   highlight(mode, code)
