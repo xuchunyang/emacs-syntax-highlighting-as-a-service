@@ -15,5 +15,6 @@ WORKDIR /usr/src/app
 COPY package.json .
 RUN npm install
 EXPOSE 3478
-CMD [ "npm", "start" ]
+RUN npm install pm2 -g
+CMD [ "pm2-runtime", "npm", "--", "start" ]
 COPY . .
