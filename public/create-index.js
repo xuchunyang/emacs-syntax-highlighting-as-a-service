@@ -7,26 +7,7 @@ const Handlebars = require("handlebars");
 const contents = fs.readFileSync("index.handlebars", "utf-8");
 const template = Handlebars.compile(contents);
 
-const data = {
-  themes: [
-    "default",
-    "adwaita",
-    "deeper-blue",
-    "dichromacy",
-    "leuven",
-    "light-blue",
-    "manoj-dark",
-    "misterioso",
-    "tango-dark",
-    "tango",
-    "tsdh-dark",
-    "tsdh-light",
-    "wheatgrass",
-    "whiteboard",
-    "wombat",
-  ],
-};
-
+const data = JSON.parse(fs.readFileSync("data.json", "utf-8"));
 const html = template(data);
 
 fs.writeFileSync("index.html", html);
