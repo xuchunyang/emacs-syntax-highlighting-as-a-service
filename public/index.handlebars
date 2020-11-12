@@ -17,21 +17,9 @@
         <p>
           <label for="theme">Theme: </label>
           <select id="theme">
-            <option value="default">
-            <option value="adwaita">
-            <option value="deeper-blue">
-            <option value="dichromacy">
-            <option value="leuven">
-            <option value="light-blue">
-            <option value="manoj-dark">
-            <option value="misterioso">
-            <option value="tango-dark">
-            <option value="tango">
-            <option value="tsdh-dark">
-            <option value="tsdh-light">
-            <option value="wheatgrass">
-            <option value="whiteboard">
-            <option value="wombat">
+            {{#themes}}
+            <option value="{{.}}">
+            {{/themes}}
           </select>
         </p>
         <p>
