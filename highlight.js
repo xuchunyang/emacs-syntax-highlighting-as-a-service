@@ -1,7 +1,8 @@
+require("dotenv").config();
 const debug = require("debug")("highlight");
 const { exec } = require("child_process");
 
-const commandTemplate =
+const commandTemplate = process.env.COMMAND_TEMPLATE ||
   "/Users/xcy/src/emacs-mac/src/emacs -Q --batch -l /Users/xcy/.emacs.d/elpa-27.1/face-explorer-20190517.1857/face-explorer.el -l /Users/xcy/.emacs.d/elpa-27.1/e2ansi-20190517.1902/e2ansi.el -l /Users/xcy/.emacs.d/elpa-27.1/e2ansi-20190517.1902/bin/e2ansi-cat --mode %s - | ansi-to-html";
 
 async function highlight(mode, code) {
