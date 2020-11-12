@@ -2,7 +2,7 @@
 
 A website to syntax highlighting code (or any text supported by Emacs),
 
-https://emacs-syntax-highlighting-as-a-service.xuchunyang.me
+https://emacs-syntax-highlight.xuchunyang.me
 
 which is powered by GNU Emacs using
 [e2ansi](https://github.com/Lindydancer/e2ansi) and
