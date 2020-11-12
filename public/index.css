@@ -31,3 +31,11 @@ pre {
   box-shadow: 3px 3px 3px #eee;
   padding: 1em;
 }
+
+footer {
+  margin-top: 2em;
+  font-size: 90%;
+  font-style: italic;
+  color: #555;
+  text-align: center;
+}
