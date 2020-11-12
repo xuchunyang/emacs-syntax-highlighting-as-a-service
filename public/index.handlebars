@@ -12,7 +12,12 @@
       <form>
         <p>
           <label for="mode">Major mode: </label>
-          <input id="mode" type="text" value="emacs-lisp-mode" required />
+          <input list="mode-list" id="mode" type="text" value="emacs-lisp-mode" required />
+          <datalist id="mode-list">
+            {{#modes}}
+            <option value="{{.}}">
+            {{/modes}}
+          </datalist>
         </p>
         <p>
           <label for="theme">Theme: </label>
