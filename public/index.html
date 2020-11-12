@@ -15,6 +15,39 @@
           <input id="mode" type="text" value="emacs-lisp-mode" required />
         </p>
         <p>
+          <label for="theme">Theme: </label>
+          <select id="theme">
+            <option value="">No theme (default)</option>
+            <option value="adwaita">adwaita</option>
+            <option value="deeper-blue">deeper-blue</option>
+            <option value="dichromacy">dichromacy</option>
+            <option value="leuven">leuven</option>
+            <option value="light-blue">light-blue</option>
+            <option value="manoj-dark">manoj-dark</option>
+            <option value="misterioso">misterioso</option>
+            <option value="tango-dark">tango-dark</option>
+            <option value="tango">tango</option>
+            <option value="tsdh-dark">tsdh-dark</option>
+            <option value="tsdh-light">tsdh-light</option>
+            <option value="wheatgrass">wheatgrass</option>
+            <option value="whiteboard">whiteboard</option>
+            <option value="wombat">wombat</option>
+          </select>
+        </p>
+        <p>
+          <span>Background mode: </span>
+          <input
+            type="radio"
+            id="light"
+            name="backgroundMode"
+            value=""
+            checked
+          />
+          <label for="id">light (default)</label>
+          <input type="radio" id="dark" name="backgroundMode" value="dark" />
+          <label for="id">dark</label>
+        </p>
+        <p>
           <label for="code">Code: </label>
           <textarea id="code" rows="12" required>
 (defmacro with-temp-buffer (&rest body)
@@ -35,7 +68,7 @@ See also `with-temp-file' and `with-output-to-string'."
           <input type="submit" value="Highlight" />
         </p>
         <p>
-          <output id="result" for="mode code"></output>
+          <output id="result" for="mode theme code"></output>
         </p>
       </form>
       <footer>
@@ -60,12 +93,14 @@ See also `with-temp-file' and `with-output-to-string'."
         form.result.value = "Sending your code to server to highlight...";
         const mode = form.mode.value;
         const code = form.code.value;
+        const theme = form.theme.value;
+        const backgroundMode = form.backgroundMode.value;
         fetch("/api/highlight", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ mode, code }),
+          body: JSON.stringify({ mode, code, theme, backgroundMode }),
         })
           .then((response) => response.json())
           .then((json) => {

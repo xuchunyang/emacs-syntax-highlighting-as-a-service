@@ -9,7 +9,7 @@ RUN mkdir -p /root/.emacs.d
 COPY init.el /root/.emacs.d
 RUN emacs -Q --batch -l /root/.emacs.d/init.el /root/.emacs.d/init.el
 
-ENV COMMAND_TEMPLATE="emacs -Q --batch -l /root/.emacs.d/init.el --mode %s - | ansi-to-html"
+ENV COMMAND_TEMPLATE="emacs -Q --batch -l /root/.emacs.d/init.el %s - | ansi-to-html"
 
 WORKDIR /usr/src/app
 COPY package.json .

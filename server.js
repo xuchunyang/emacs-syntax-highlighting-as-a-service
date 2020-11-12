@@ -13,8 +13,8 @@ app.use(express.json()); // parse request's json body
 
 app.post("/api/highlight", (req, res, next) => {
   debug("BODY: %O", req.body);
-  const { mode, code } = req.body;
-  highlight(mode, code)
+  const { mode, code, theme, backgroundMode } = req.body;
+  highlight(mode, code, theme, backgroundMode)
     .then((data) => {
       if (data.error) {
         data.error = data.error.message;
