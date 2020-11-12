@@ -187,6 +187,23 @@ See also `with-temp-file' and `with-output-to-string'."
     </div>
     <script>
       const form = document.querySelector("form");
+      let saveState = (state) => {
+        console.log("saveState");
+        localStorage.setItem("state", JSON.stringify(state));
+      };
+      let loadState = () => {
+        let state = localStorage.getItem("state");
+        if (state) {
+          console.log("loadState");
+          state = JSON.parse(state);
+          form.mode.value = state.mode;
+          form.theme.value = state.theme;
+          form.backgroundMode.value = state.backgroundMode;
+          form.code.value = state.code;
+          form.result.innerHTML = state.result;
+        }
+      };
+      loadState();
       form.onsubmit = (e) => {
         e.preventDefault();
         form.result.value = "Sending your code to server to highlight...";
@@ -217,6 +234,14 @@ See also `with-temp-file' and `with-output-to-string'."
             }
             // finally show the result
             form.result.innerHTML = `<pre>${json.data.stdout}</pre>`;
+
+            saveState({
+              mode,
+              code,
+              theme,
+              backgroundMode,
+              result: form.result.innerHTML,
+            });
           })
           .catch((error) => {
             console.error(error);
