@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Emacs Syntax Highlight</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="main">
+      <h1>Emacs Syntax Highlight</h1>
+      <form>
+        <p>
+          <label for="mode">Major mode: </label>
+          <input id="mode" type="text" value="emacs-lisp-mode" required />
+        </p>
+        <p>
+          <label for="code">Code: </label>
+          <textarea id="code" rows="12" required>
+(defmacro with-temp-buffer (&rest body)
+  "Create a temporary buffer, and evaluate BODY there like `progn'.
+See also `with-temp-file' and `with-output-to-string'."
+  (declare (indent 0) (debug t))
+  (let ((temp-buffer (make-symbol "temp-buffer")))
+    `(let ((,temp-buffer (generate-new-buffer " *temp*")))
+       ;; `kill-buffer' can change current-buffer in some odd cases.
+       (with-current-buffer ,temp-buffer
+         (unwind-protect
+	     (progn ,@body)
+           (and (buffer-name ,temp-buffer)
+                (kill-buffer ,temp-buffer)))))))</textarea
+          >
+        </p>
+        <p>
+          <input type="submit" value="Highlight" />
+        </p>
+        <p>
+          <output id="result" for="mode code"></output>
+        </p>
+      </form>
+    </div>
+    <script>
+      const form = document.querySelector("form");
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        form.result.value = "Sending your code to server to highlight...";
+        const mode = form.mode.value;
+        const code = form.code.value;
+        fetch("/api/highlight", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ mode, code }),
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            console.log("JSON:", json);
+            // error case 1, missing args
+            if (json.error) {
+              form.result.value = json.error;
+              return;
+            }
+            // error case 2, from exec
+            const { error, stderr, stdout } = json.data;
+            if (error || stderr) {
+              form.result.value = "Error: " + (error || stderr);
+              return;
+            }
+            // finally show the result
+            form.result.innerHTML = `<pre>${json.data.stdout}</pre>`;
+          })
+          .catch((error) => {
+            console.error(error);
+            form.result.value = "Error: " + error.message;
+          });
+      };
+    </script>
+  </body>
+</html>

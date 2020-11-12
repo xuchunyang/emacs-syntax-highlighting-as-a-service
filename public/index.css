@@ -1,0 +1,33 @@
+body {
+  color: #333;
+  line-height: 1.5;
+  max-width: 50em;
+  margin: 0 auto;
+}
+
+#main {
+  margin: 0 0.5em;
+}
+
+h1 {
+  text-align: center;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  padding: 5px;
+}
+
+textarea {
+  width: 100%;
+}
+
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  background-color: #f9fafa;
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px 3px #eee;
+  padding: 1em;
+}
