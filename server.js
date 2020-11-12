@@ -15,7 +15,12 @@ app.post("/api/highlight", (req, res, next) => {
   debug("BODY: %O", req.body);
   const { mode, code } = req.body;
   highlight(mode, code)
-    .then((data) => res.json({ data }))
+    .then((data) => {
+      if (data.error) {
+        data.error = data.error.message;
+      }
+      res.json({ data });
+    })
     .catch((error) => res.json({ error: error.message }));
 });
 
