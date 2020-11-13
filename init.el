@@ -16,9 +16,26 @@
 
 (package-initialize)
 
-(unless (package-installed-p 'e2ansi)
-  (package-refresh-contents)
-  (package-install 'e2ansi))
+(let ((packages '(e2ansi
+                  ;; Themes
+                  color-theme-sanityinc-tomorrow
+                  cyberpunk-theme
+                  spacemacs-theme
+                  ;; Major modes
+                  csharp-mode
+                  php-mode
+                  go-mode
+                  rust-mode
+                  haskell-mode))
+      (refreshed nil))
+  (dolist (pkg packages)
+    (unless (package-installed-p pkg)
+      (unless refreshed
+        (package-refresh-contents)
+        (setq refreshed t))
+      (package-install pkg))))
+
+(setq custom-safe-themes t)
 
 (require 'e2ansi)
 (if (null command-line-args-left)
