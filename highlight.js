@@ -25,7 +25,7 @@ async function highlight(mode, code, theme, backgroundMode) {
       return;
     }
     let args = ` --mode ${mode} `;
-    if (theme) args += ` --theme ${theme} `;
+    if (theme && theme !== "default") args += ` --theme ${theme} `;
     if (backgroundMode) args += ` --background-mode ${backgroundMode} `;
     const command = commandTemplate.replace("%s", args);
     debug("COMMAND: %s", command);
