@@ -18,7 +18,7 @@ ARG ELPA_MIRROR=""
 RUN ELPA_MIRROR=$ELPA_MIRROR emacs -Q --batch -l /root/.emacs.d/init.el /root/.emacs.d/init.el
 RUN cd public && make --always-make EMACS_COMMAND="emacs -Q --batch -l /root/.emacs.d/init.el"
 
-ENV COMMAND_TEMPLATE="emacs -Q --batch -l /root/.emacs.d/init.el -l /root/.emacs.d/init-e2ansi.el %s - | ansi-to-html"
+ENV COMMAND_TEMPLATE="emacs -Q --batch -l /root/.emacs.d/init.el -l /root/.emacs.d/init-e2ansi.el --colors 256 --color-class color %s - | ansi-to-html"
 
 EXPOSE 3478
 CMD [ "pm2-runtime", "npm", "--", "start" ]
