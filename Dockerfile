@@ -7,7 +7,9 @@ RUN npm install --global ansi-to-html
 
 RUN mkdir -p /root/.emacs.d
 COPY init.el /root/.emacs.d
-RUN emacs -Q --batch -l /root/.emacs.d/init.el /root/.emacs.d/init.el
+# podman build -t color --build-arg ELPA_MIRROR=tuna .
+ARG ELPA_MIRROR=""
+RUN ELPA_MIRROR=$ELPA_MIRROR emacs -Q --batch -l /root/.emacs.d/init.el /root/.emacs.d/init.el
 
 ENV COMMAND_TEMPLATE="emacs -Q --batch -l /root/.emacs.d/init.el %s - | ansi-to-html"
 
