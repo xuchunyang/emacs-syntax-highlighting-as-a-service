@@ -12,6 +12,8 @@
         '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
           ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
 
+(setq package-check-signature nil)
+
 (package-initialize)
 
 (unless (package-installed-p 'e2ansi)
