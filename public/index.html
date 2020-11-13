@@ -187,22 +187,29 @@ See also `with-temp-file' and `with-output-to-string'."
     </div>
     <script>
       const form = document.querySelector("form");
-      let saveState = (state) => {
-        console.log("saveState");
-        localStorage.setItem("state", JSON.stringify(state));
-      };
-      let loadState = () => {
-        let state = localStorage.getItem("state");
-        if (state) {
-          console.log("loadState");
-          state = JSON.parse(state);
-          form.mode.value = state.mode;
-          form.theme.value = state.theme;
-          form.backgroundMode.value = state.backgroundMode;
-          form.code.value = state.code;
-          form.result.innerHTML = state.result;
-        }
-      };
+      let saveState = () => {};
+      let loadState = () => {};
+      try {
+        localStorage;
+        let saveState = (state) => {
+          console.log("saveState");
+          localStorage.setItem("state", JSON.stringify(state));
+        };
+        let loadState = () => {
+          let state = localStorage.getItem("state");
+          if (state) {
+            console.log("loadState");
+            state = JSON.parse(state);
+            form.mode.value = state.mode;
+            form.theme.value = state.theme;
+            form.backgroundMode.value = state.backgroundMode;
+            form.code.value = state.code;
+            form.result.innerHTML = state.result;
+          }
+        };
+      } catch (e) {
+        console.log("localStorage is not available", e);
+      }
       loadState();
       form.onsubmit = (e) => {
         e.preventDefault();
