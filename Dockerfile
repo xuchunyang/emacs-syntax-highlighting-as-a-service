@@ -16,7 +16,9 @@ ENV COMMAND_TEMPLATE="emacs -Q --batch -l /root/.emacs.d/init.el %s - | ansi-to-
 WORKDIR /usr/src/app
 COPY package.json .
 RUN npm install
-EXPOSE 3478
-RUN npm install pm2 -g
-CMD [ "pm2-runtime", "npm", "--", "start" ]
 COPY . .
+RUN apt-get install --assume-yes make
+RUN cd public && make --always-make EMACS_COMMAND="emacs -Q --batch -l /root/.emacs.d/init.el"
+EXPOSE 3478
+RUN npm install --global pm2
+CMD [ "pm2-runtime", "npm", "--", "start" ]
