@@ -36,5 +36,3 @@
       (package-install pkg))))
 
 (setq custom-safe-themes t)
-
-(require 'e2ansi)

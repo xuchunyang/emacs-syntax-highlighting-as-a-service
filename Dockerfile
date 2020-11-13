@@ -11,7 +11,8 @@ COPY init.el /root/.emacs.d
 ARG ELPA_MIRROR=""
 RUN ELPA_MIRROR=$ELPA_MIRROR emacs -Q --batch -l /root/.emacs.d/init.el /root/.emacs.d/init.el
 
-ENV COMMAND_TEMPLATE="emacs -Q --batch -l /root/.emacs.d/init.el %s - | ansi-to-html"
+COPY init-e2ansi.el /root/.emacs.d
+ENV COMMAND_TEMPLATE="emacs -Q --batch -l /root/.emacs.d/init.el -l /root/.emacs.d/init-e2ansi.el %s - | ansi-to-html"
 
 WORKDIR /usr/src/app
 COPY package.json .
